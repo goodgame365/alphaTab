@@ -1,283 +1,214 @@
-const toDomElement = (function () {
-    const parser = document.createElement('div');
-    return function (html) {
-        parser.innerHTML = html;
-        return parser.firstElementChild;
-    };
-})();
+<div class="at-wrap loading">
+    <div class="at-overlay">
+        <div class="at-overlay-content">
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"></div>
+        </div>
+    </div>
+    <div class="at-content" >
+        <div class="at-sidebar">
+            <div class="at-sidebar-content">
+                <div class="at-track-list"></div>
+            </div>
+        </div>
+        <div class="at-viewport" >
+            <div class="at-canvas"
+                 id="alphaTab"
+                 data-file="pu/gtp/canon.gp"
+                 data-player-scrolloffsetx="-10"
+                 data-notation-notationmode="songbook"
+                 data-player-enableplayer="true"
+                 data-player-soundfont="/dist/font/sonivox.sf2"
+                 data-notation-rhythmmode="2"
 
-function createTrackItem(track) {
-    const trackTemplate = Handlebars.compile(document.querySelector('#at-track-template').innerHTML);
-    const trackItem = toDomElement(trackTemplate(track));
 
-    // init track controls
-    const muteButton = trackItem.querySelector('.at-track-mute');
-    const soloButton = trackItem.querySelector('.at-track-solo');
-    const volumeSlider = trackItem.querySelector('.at-track-volume');
+ 
 
-    muteButton.onclick = function (e) {
-        e.stopPropagation();
-        muteButton.classList.toggle('active');
-        at.changeTrackMute([track], muteButton.classList.contains('active'));
-    };
+            ></div>
+        </div>
+    </div>
+    <div class="at-footer">
+        <div class="at-time-slider">
+            <div class="at-time-slider-value"></div>
+        </div>
+        <div class="at-player">
+            
+            <div class="at-player-left">
+                <a href="#" class="at-stop disabled" data-toggle="tooltip" data-placement="top" title="Stop">
+                    <i class="fas fa-step-backward"></i>
+                </a>
 
-    soloButton.onclick = function (e) {
-        e.stopPropagation();
-        soloButton.classList.toggle('active');
-        at.changeTrackSolo([track], soloButton.classList.contains('active'));
-    };
+                <a
+                    href="#"
+                    class="at-play-pause disabled"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Play/Pause"
+                >
+                    <i class="fas fa-play"></i>
+                </a>
 
-    volumeSlider.oninput = function (e) {
-        e.preventDefault();
-        // Here we need to do some math to map the 1-16 slider to the
-        // volume in alphaTab. In alphaTab it is 1.0 for 100% which is
-        // equal to the volume in the track information
-        at.changeTrackVolume([track], volumeSlider.value / track.playbackInfo.volume);
-    };
+                <div class="btn-group dropup">
+                    <button
+                        type="button"
+                        class="btn dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                    >
+                        <i class="fas fa-search"></i>
+                        <span class="at-speed-label">1x</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu at-speed-options">
+                        <a class="dropdown-item" href="#">0.25x</a>
+                        <a class="dropdown-item" href="#">0.5x</a>
+                        <a class="dropdown-item" href="#">0.75x</a>
+                        <a class="dropdown-item" href="#">0.9x</a>
+                        <a class="dropdown-item" href="#">1x</a>
+                        <a class="dropdown-item" href="#">1.1x</a>
+                        <a class="dropdown-item" href="#">1.25x</a>
+                        <a class="dropdown-item" href="#">1.50x</a>
+                        <a class="dropdown-item" href="#">2x</a>
+                    </div>
+                </div>
 
-    volumeSlider.onclick = function (e) {
-        e.stopPropagation();
-    };
+                <div class="at-player-loading progress">
+                    <span class="progress-left">
+                        <span class="progress-bar"></span>
+                    </span>
+                    <span class="progress-right">
+                        <span class="progress-bar"></span>
+                    </span>
+                    <div
+                        class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center font-weight-bold"
+                    >
+                        <span class="progress-value-number">0</span><sup class="small">%</sup>
+                    </div>
+                </div>
+                <div class="at-song-details">
+                    <span class="at-song-title"></span> - 
+                    <span class="at-song-artist"></span>
+                </div>
+                <div class="at-time-position" data-toggle="tooltip" data-placement="top" title="Time Position"></div>
+            </div>
 
-    trackItem.onclick = function (e) {
-        e.stopPropagation();
-        at.renderTracks([track]);
-    };
+            <div class="at-player-right">
+                <a href="#" class="at-metronome disabled" data-toggle="tooltip" data-placement="top" title="Metronome">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a href="#" class="at-loop disabled" data-toggle="tooltip" data-placement="top" title="Loop">
+                    <i class="fas fa-retweet"></i>
+                </a>
+                <a href="#" class="at-print" data-toggle="tooltip" data-placement="top" title="Print">
+                    <i class="fas fa-print"></i>
+                </a>
 
-    muteButton.value = track.playbackInfo.isMute;
-    soloButton.value = track.playbackInfo.isSolo;
-    volumeSlider.value = track.playbackInfo.volume;
+                <div class="btn-group dropup">
+                    <button type="button"
+                            class="btn dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        <i class="fas fa-search"></i>
+                        <span class="at-zoom-label">100%</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right at-zoom-options">
+                        <a class="dropdown-item" href="#">25%</a>
+                        <a class="dropdown-item" href="#">50%</a>
+                        <a class="dropdown-item" href="#">75%</a>
+                        <a class="dropdown-item" href="#">90%</a>
+                        <a class="dropdown-item" href="#">100%</a>
+                        <a class="dropdown-item" href="#">110%</a>
+                        <a class="dropdown-item" href="#">125%</a>
+                        <a class="dropdown-item" href="#">150%</a>
+                        <a class="dropdown-item" href="#">200%</a>
+                    </div>
+                </div>
 
-    trackItem.track = track;
-    return trackItem;
-}
 
-function setupControl(selector) {
-    const el = document.querySelector(selector);
-    const control = el.closest('.at-wrap');
+                <div class="btn-group dropup">
+                    <button type="button"
+                            class="btn dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        <i class="fas fa-search"></i>
+                        <span class="at-zoom-label">select score</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right at-opengtpfile-options">
+                        <a class="dropdown-item" href="/pu/gtpfile/guitarpro7/accentuations.gp">accentuations</a>
+                        <a class="dropdown-item" href="/pu/gtpfile/guitarpro7/anacrusis.gp">anacrusis</a>
+                        <a class="dropdown-item" href="/pu/gtpfile/guitarpro7/bends-advanced.gp">bends-advanced</a>
+                        <a class="dropdown-item" href="/pu/gtpfile/guitarpro7/bends.gp">bends</a>
+                        <a class="dropdown-item" href="/pu/gtpfile/guitarpro7/BinaryStylesheet">BinaryStylesheet</a>
+                       
+                    </div>
+                </div>
 
-    const viewPort =
-        'playerScrollelement' in el.dataset ? el.dataset.playerScrollelement : control.querySelector('.at-viewport');
-    const at = new alphaTab.AlphaTabApi(el, {
-        player: {
-            scrollElement: viewPort
-        }
-    });
-    at.error.on(function(e) {
-        console.error('alphaTab error', e);
-    });
 
-    el.ondragover = function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'link';
-    };
 
-    el.ondrop = function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        const files = e.dataTransfer.files;
-        if (files.length === 1) {
-            const reader = new FileReader();
-            reader.onload = function (data) {
-                at.load(data.target.result, [0]);
-            };
-            reader.readAsArrayBuffer(files[0]);
-        }
-        console.log('drop', files);
-    };
 
-    const trackItems = [];
-    at.renderStarted.on(function (isResize) {
-        if (!isResize) {
-            control.classList.add('loading');
-        }
-        const tracks = new Map();
-        at.tracks.forEach(function (t) {
-            tracks.set(t.index, t);
-        });
+                <div class="btn-group dropup">
+                    <button type="button"
+                            class="btn dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        <i class="fas fa-search"></i>
+                        <span class="at-staveProfile-label">scoretab</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right at-staveProfile-options">
+                        <a class="dropdown-item" href="#">Tab</a>
+                        <a class="dropdown-item" href="#">score</a>
+                        <a class="dropdown-item" href="#">scoretab</a>
 
-        trackItems.forEach(function (trackItem) {
-            if (tracks.has(trackItem.track.index)) {
-                trackItem.classList.add('active');
-            } else {
-                trackItem.classList.remove('active');
-            }
-        });
-    });
+                    </div>
 
-    const playerLoadingIndicator = control.querySelector('.at-player-loading');
-    at.soundFontLoad.on(function (args) {
-        updateProgress(playerLoadingIndicator, args.loaded / args.total);
-    });
-    at.soundFontLoaded.on(function () {
-        playerLoadingIndicator.classList.add('d-none');
-    });
-    at.renderFinished.on(function () {
-        control.classList.remove('loading');
-    });
 
-    at.scoreLoaded.on(function (score) {
-        control.querySelector('.at-song-title').innerText = score.title;
-        control.querySelector('.at-song-artist').innerText = score.artist;
 
-        // fill track selector
-        const trackList = control.querySelector('.at-track-list');
-        trackList.innerHTML = '';
 
-        score.tracks.forEach(function (track) {
-            const trackItem = createTrackItem(track);
-            trackItems.push(trackItem);
-            trackList.appendChild(trackItem);
-        });
+                </div>
 
-        currentTempo = score.tempo;
-    });
+                <div class="btn-group dropup">
+                    <button type="button"
+                            class="btn dropdown-toggle at-layout-button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        Layout
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right at-layout-options">
+                        <a class="dropdown-item" href="#" data-layout="horizontal-screen">
+                            <i class="far fa-caret-square-right"></i> Horizontal Layout (Off-Screen)
+                        </a>
+                        <a class="dropdown-item" href="#" data-layout="horizontal-bar">
+                            <i class="fas fa-caret-square-right"></i> Horizontal Layout (Bar Wise)
+                        </a>
+                        <a class="dropdown-item" href="#" data-layout="page">
+                            <i class="fas fa-caret-square-down"></i> Vertical Layout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    let currentTempo = 0;
-    const timePositionLabel = control.querySelector('.at-time-position');
-    const timeSliderValue = control.querySelector('.at-time-slider-value');
+<template id="at-track-template">
+    <div class="at-track" id="{{index}}">
+        <div class="at-track-icon">
+            <i class="fas fa-guitar"></i>
+        </div>
+        <span class="at-track-name">{{name}}</span>
+        <div class="at-track-controls">
+            <button type="button" class="btn btn-sm btn-outline-danger at-track-mute">Mute</button>
+            <button type="button" class="btn btn-sm btn-outline-success at-track-solo">Solo</button>
+            <button type="button" class="btn btn-sm btn-outline-success at-track-score">Score</button>
+            <button type="button" class="btn btn-sm btn-outline-success at-track-tab" >Tab</button>
 
-    function formatDuration(milliseconds) {
-        let seconds = milliseconds / 1000;
-        const minutes = (seconds / 60) | 0;
-        seconds = (seconds - minutes * 60) | 0;
-        return String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
-    }
 
-    let previousTime = -1;
-    at.playerPositionChanged.on(function (args) {
-        // reduce number of UI updates to second changes.
-        const currentSeconds = (args.currentTime / 1000) | 0;
-        if (currentSeconds == previousTime) {
-            return;
-        }
-        previousTime = currentSeconds;
 
-        timePositionLabel.innerText = formatDuration(args.currentTime) + ' / ' + formatDuration(args.endTime);
-        timeSliderValue.style.width = ((args.currentTime / args.endTime) * 100).toFixed(2) + '%';
-    });
-
-    const playPauseButton = control.querySelector('.at-play-pause');
-    at.playerReady.on(function () {
-        control.querySelectorAll('.at-player .disabled').forEach(function (c) {
-            c.classList.remove('disabled');
-        });
-    });
-
-    at.playerStateChanged.on(function (args) {
-        const icon = playPauseButton.querySelector('i');
-        if (args.state == 0) {
-            icon.classList.remove('fa-pause');
-            icon.classList.add('fa-play');
-        } else {
-            icon.classList.remove('fa-play');
-            icon.classList.add('fa-pause');
-        }
-    });
-
-    playPauseButton.onclick = function (e) {
-        e.stopPropagation();
-        if (!e.target.classList.contains('disabled')) {
-            at.playPause();
-        }
-    };
-
-    control.querySelector('.at-stop').onclick = function (e) {
-        e.stopPropagation();
-        if (!e.target.classList.contains('disabled')) {
-            at.stop();
-        }
-    };
-
-    control.querySelector('.at-metronome').onclick = function (e) {
-        e.stopPropagation();
-        const link = e.target.closest('a');
-        link.classList.toggle('active');
-        if (link.classList.contains('active')) {
-            at.metronomeVolume = 1;
-        } else {
-            at.metronomeVolume = 0;
-        }
-    };
-
-    control.querySelectorAll('.at-speed-options a').forEach(function (a) {
-        a.onclick = function (e) {
-            e.preventDefault();
-            at.playbackSpeed = parseFloat(e.target.innerText);
-            control.querySelector('.at-speed-label').innerText = e.target.innerText;
-        };
-    });
-
-    control.querySelector('.at-loop').onclick = function (e) {
-        e.stopPropagation();
-        const link = e.target.closest('a');
-        link.classList.toggle('active');
-        if (link.classList.contains('active')) {
-            at.isLooping = true;
-        } else {
-            at.isLooping = false;
-        }
-    };
-
-    control.querySelector('.at-print').onclick = function (e) {
-        at.print();
-    };
-
-    control.querySelectorAll('.at-zoom-options a').forEach(function (a) {
-        a.onclick = function (e) {
-            e.preventDefault();
-            at.settings.display.scale = parseInt(e.target.innerText) / 100.0;
-            control.querySelector('.at-zoom-label').innerText = e.target.innerText;
-            at.updateSettings();
-            at.render();
-        };
-    });
-
-    control.querySelectorAll('.at-layout-options a').forEach(function (a) {
-        a.onclick = function (e) {
-            e.preventDefault();
-            const settings = at.settings;
-            switch (e.target.dataset.layout) {
-                case 'page':
-                    settings.display.layoutMode = alphaTab.LayoutMode.Page;
-                    settings.player.scrollMode = alphaTab.ScrollMode.Continuous;
-                    break;
-                case 'horizontal-bar':
-                    settings.display.layoutMode = alphaTab.LayoutMode.Horizontal;
-                    settings.player.scrollMode = alphaTab.ScrollMode.Continuous;
-                    break;
-                case 'horizontal-screen':
-                    settings.display.layoutMode = alphaTab.LayoutMode.Horizontal;
-                    settings.player.scrollMode = alphaTab.ScrollMode.OffScreen;
-                    break;
-            }
-
-            at.updateSettings();
-            at.render();
-        };
-    });
-
-    $(control).find('[data-toggle="tooltip"]').tooltip();
-
-    return at;
-}
-
-function updateProgress(el, value) {
-    value = value * 100;
-    const left = el.querySelector('.progress-left .progress-bar');
-    const right = el.querySelector('.progress-right .progress-bar');
-    function percentageToDegrees(percentage) {
-        return (percentage / 100) * 360;
-    }
-
-    if (value > 0) {
-        if (value <= 50) {
-            right.style.transform = 'rotate(' + percentageToDegrees(value) + 'deg)';
-        } else {
-            right.style.transform = 'rotate(180deg)';
-            left.style.transform = 'rotate(' + percentageToDegrees(value - 50) + 'deg)';
-        }
-    }
-    el.querySelector('.progress-value-number').innerText = value | 0;
-}
+            <i class="fas fa-volume-up"></i>
+            <input type="range" min="0" max="16" value="8" class="at-track-volume" />
+        </div>
+    </div>
+</template>
