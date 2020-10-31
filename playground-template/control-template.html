@@ -4,21 +4,25 @@
             <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"></div>
         </div>
     </div>
-    <div class="at-content">
+    <div class="at-content" >
         <div class="at-sidebar">
             <div class="at-sidebar-content">
                 <div class="at-track-list"></div>
             </div>
         </div>
-        <div class="at-viewport">
-            <div
-                class="at-canvas"
-                id="alphaTab"
-                data-file="/test-data/audio/full-song.gp5"
-                data-player-scrolloffsetx="-10"
-                data-notation-notationmode="songbook"
-                data-player-enableplayer="true"
-                data-player-soundfont="/font/sonivox/sonivox.sf2"
+        <div class="at-viewport" >
+            <div class="at-canvas"
+                 id="alphaTab"
+                 data-file="pu/gtp/canon.gp"
+                 data-player-scrolloffsetx="-10"
+                 data-notation-notationmode="songbook"
+                 data-player-enableplayer="true"
+                 data-player-soundfont="/dist/font/sonivox.sf2"
+                 data-notation-rhythmmode="2"
+
+
+ 
+
             ></div>
         </div>
     </div>
@@ -99,13 +103,11 @@
                 </a>
 
                 <div class="btn-group dropup">
-                    <button
-                        type="button"
-                        class="btn dropdown-toggle"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                    >
+                    <button type="button"
+                            class="btn dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
                         <i class="fas fa-search"></i>
                         <span class="at-zoom-label">100%</span>
                     </button>
@@ -122,14 +124,56 @@
                     </div>
                 </div>
 
+
                 <div class="btn-group dropup">
-                    <button
-                        type="button"
-                        class="btn dropdown-toggle at-layout-button"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                    >
+                    <button type="button"
+                            class="btn dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        <i class="fas fa-search"></i>
+                        <span class="at-zoom-label">select score</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right at-opengtpfile-options">
+                        <a class="dropdown-item" href="/pu/gtpfile/guitarpro7/accentuations.gp">accentuations</a>
+                        <a class="dropdown-item" href="/pu/gtpfile/guitarpro7/anacrusis.gp">anacrusis</a>
+                        <a class="dropdown-item" href="/pu/gtpfile/guitarpro7/bends-advanced.gp">bends-advanced</a>
+                        <a class="dropdown-item" href="/pu/gtpfile/guitarpro7/bends.gp">bends</a>
+                        <a class="dropdown-item" href="/pu/gtpfile/guitarpro7/BinaryStylesheet">BinaryStylesheet</a>
+                       
+                    </div>
+                </div>
+
+
+
+
+                <div class="btn-group dropup">
+                    <button type="button"
+                            class="btn dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        <i class="fas fa-search"></i>
+                        <span class="at-staveProfile-label">scoretab</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right at-staveProfile-options">
+                        <a class="dropdown-item" href="#">Tab</a>
+                        <a class="dropdown-item" href="#">score</a>
+                        <a class="dropdown-item" href="#">scoretab</a>
+
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="btn-group dropup">
+                    <button type="button"
+                            class="btn dropdown-toggle at-layout-button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
                         Layout
                     </button>
                     <div class="dropdown-menu dropdown-menu-right at-layout-options">
@@ -150,7 +194,7 @@
 </div>
 
 <template id="at-track-template">
-    <div class="at-track">
+    <div class="at-track" id="{{index}}">
         <div class="at-track-icon">
             <i class="fas fa-guitar"></i>
         </div>
@@ -158,6 +202,11 @@
         <div class="at-track-controls">
             <button type="button" class="btn btn-sm btn-outline-danger at-track-mute">Mute</button>
             <button type="button" class="btn btn-sm btn-outline-success at-track-solo">Solo</button>
+            <button type="button" class="btn btn-sm btn-outline-success at-track-score">Score</button>
+            <button type="button" class="btn btn-sm btn-outline-success at-track-tab" >Tab</button>
+
+
+
             <i class="fas fa-volume-up"></i>
             <input type="range" min="0" max="16" value="8" class="at-track-volume" />
         </div>
